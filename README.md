@@ -4,7 +4,7 @@ Welcome to the source code of my personal portfolio! This project is a highly op
 
 ## 🌌 The Interface
 ![Portfolio Hero Section](./src/assets/hero-screenshot.png) 
-*(Note: If you saved your screenshot inside the src/assets folder instead of public, you will need to adjust this path!)*
+
 
 ## 🛠️ Tech Stack & Features
 * **Framework:** React.js / Vite
