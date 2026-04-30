@@ -13,6 +13,7 @@ const faqs = [
   { q: 'What are your future technical goals?', x: 52, y: 74, w: 195 },
 ]
 
+// ── Desktop: absolute-positioned cloud bubble ─────────────────────
 function CloudBubble({ faq, delay, onClick, isActive }) {
   return (
     <motion.div
@@ -22,16 +23,8 @@ function CloudBubble({ faq, delay, onClick, isActive }) {
       transition={{ delay, duration: 0.6, ease: 'easeOut' }}
       whileHover={{ scale: 1.05, zIndex: 10 }}
       animate={{ y: [0, -6, 0] }}
-      style={{
-        position: 'absolute',
-        left: `${faq.x}%`,
-        top: `${faq.y}%`,
-        width: faq.w,
-        cursor: 'none',
-        zIndex: isActive ? 20 : 2,
-      }}
+      style={{ position: 'absolute', left: `${faq.x}%`, top: `${faq.y}%`, width: faq.w, cursor: 'none', zIndex: isActive ? 20 : 2 }}
     >
-      {/* Cloud SVG + content */}
       <div
         onClick={() => onClick(faq.q)}
         className="relative px-5 py-4 rounded-3xl text-center"
@@ -46,68 +39,66 @@ function CloudBubble({ faq, delay, onClick, isActive }) {
           borderRadius: '50% 50% 48% 52% / 55% 55% 45% 45%',
         }}
       >
-        {/* Inner gem highlight */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '15%',
-            left: '20%',
-            width: '60%',
-            height: '30%',
-            background: 'linear-gradient(135deg, rgba(200,180,255,0.15), transparent)',
-            borderRadius: '50%',
-            pointerEvents: 'none',
-          }}
-        />
-        <p
-          className="font-poppins text-xs font-medium leading-snug relative z-10"
-          style={{ color: 'rgba(220,210,255,0.95)', textShadow: '0 0 8px rgba(180,130,255,0.6)' }}
-        >
+        <div style={{ position: 'absolute', top: '15%', left: '20%', width: '60%', height: '30%', background: 'linear-gradient(135deg, rgba(200,180,255,0.15), transparent)', borderRadius: '50%', pointerEvents: 'none' }} />
+        <p className="font-poppins text-xs font-medium leading-snug relative z-10" style={{ color: 'rgba(220,210,255,0.95)', textShadow: '0 0 8px rgba(180,130,255,0.6)' }}>
           {faq.q}
         </p>
       </div>
-
-      {/* Small bumps for cloud shape */}
-      <div
-        style={{
-          position: 'absolute',
-          top: -10,
-          left: '20%',
-          width: 30,
-          height: 24,
-          borderRadius: '50%',
-          background: 'rgba(80,60,180,0.3)',
-          border: '1px solid rgba(160,100,255,0.3)',
-          backdropFilter: 'blur(14px)',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          top: -16,
-          left: '40%',
-          width: 40,
-          height: 30,
-          borderRadius: '50%',
-          background: 'rgba(80,60,180,0.3)',
-          border: '1px solid rgba(160,100,255,0.3)',
-          backdropFilter: 'blur(14px)',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          top: -10,
-          right: '20%',
-          width: 28,
-          height: 22,
-          borderRadius: '50%',
-          background: 'rgba(80,60,180,0.3)',
-          border: '1px solid rgba(160,100,255,0.3)',
-          backdropFilter: 'blur(14px)',
-        }}
-      />
+      <div style={{ position: 'absolute', top: -10, left: '20%', width: 30, height: 24, borderRadius: '50%', background: 'rgba(80,60,180,0.3)', border: '1px solid rgba(160,100,255,0.3)', backdropFilter: 'blur(14px)' }} />
+      <div style={{ position: 'absolute', top: -16, left: '40%', width: 40, height: 30, borderRadius: '50%', background: 'rgba(80,60,180,0.3)', border: '1px solid rgba(160,100,255,0.3)', backdropFilter: 'blur(14px)' }} />
+      <div style={{ position: 'absolute', top: -10, right: '20%', width: 28, height: 22, borderRadius: '50%', background: 'rgba(80,60,180,0.3)', border: '1px solid rgba(160,100,255,0.3)', backdropFilter: 'blur(14px)' }} />
     </motion.div>
+  )
+}
+
+// ── Mobile: accordion list ────────────────────────────────────────
+function FAQAccordion({ faqs }) {
+  const [openIndex, setOpenIndex] = useState(null)
+
+  return (
+    <div className="flex flex-col gap-3">
+      {faqs.map((faq, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.06 }}
+          className="rounded-2xl overflow-hidden"
+          style={{ border: '1px solid rgba(160,100,255,0.4)', background: 'rgba(60,40,140,0.25)', backdropFilter: 'blur(14px)' }}
+        >
+          <button
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            className="w-full flex items-center justify-between px-4 py-3 text-left"
+            style={{ background: 'none', border: 'none', cursor: 'none' }}
+          >
+            <span className="font-poppins text-xs font-medium" style={{ color: 'rgba(220,210,255,0.95)', textShadow: '0 0 8px rgba(180,130,255,0.6)' }}>
+              {faq.q}
+            </span>
+            <motion.span
+              animate={{ rotate: openIndex === i ? 45 : 0 }}
+              transition={{ duration: 0.2 }}
+              className="ml-3 flex-shrink-0 text-purple-300 font-bold text-base"
+            >+</motion.span>
+          </button>
+          <AnimatePresence>
+            {openIndex === i && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <p className="font-poppins text-xs text-cyan-300 px-4 pb-3">
+                  Feel free to reach out via the Get in Touch page for a detailed answer!
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      ))}
+    </div>
   )
 }
 
@@ -125,39 +116,32 @@ export default function FAQSection() {
   }
 
   return (
-    <section id="faq" className="relative py-20" style={{ zIndex: 1, minHeight: '90vh' }}>
-      <div className="container mx-auto px-8">
+    <section id="faq" className="relative py-12 sm:py-20 overflow-x-hidden" style={{ zIndex: 1, minHeight: '90vh' }}>
+      <div className="container mx-auto px-4 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-6"
+          className="text-center mb-6 sm:mb-8"
         >
           <h2
             className="font-orbitron font-black"
-            style={{
-              fontSize: 'clamp(1.8rem, 4vw, 3rem)',
-              background: 'linear-gradient(135deg, #00FFFF, #9900FF, #FF007F)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              filter: 'drop-shadow(0 0 15px rgba(0,255,255,0.4))',
-            }}
+            style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)', background: 'linear-gradient(135deg, #00FFFF, #9900FF, #FF007F)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 15px rgba(0,255,255,0.4))' }}
           >
             FAQ (Frequently Asked Questions)
           </h2>
         </motion.div>
 
-        {/* Cloud field */}
-        <div className="relative" style={{ height: 480 }}>
+        {/* ── Mobile: accordion ── */}
+        <div className="block md:hidden mb-8">
+          <FAQAccordion faqs={faqs} />
+        </div>
+
+        {/* ── Desktop: cloud field ── */}
+        <div className="hidden md:block relative" style={{ height: 480 }}>
           {faqs.map((faq, i) => (
-            <CloudBubble
-              key={i}
-              faq={faq}
-              delay={0.1 + i * 0.09}
-              onClick={setActiveQ}
-              isActive={activeQ === faq.q}
-            />
+            <CloudBubble key={i} faq={faq} delay={0.1 + i * 0.09} onClick={setActiveQ} isActive={activeQ === faq.q} />
           ))}
 
           {/* Active answer panel */}
@@ -168,29 +152,13 @@ export default function FAQSection() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                style={{
-                  position: 'absolute',
-                  bottom: 20,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: 340,
-                  padding: '16px 20px',
-                  background: 'rgba(10,5,30,0.92)',
-                  border: '1px solid rgba(0,255,255,0.4)',
-                  borderRadius: 12,
-                  boxShadow: '0 0 20px rgba(0,255,255,0.3)',
-                  zIndex: 30,
-                  backdropFilter: 'blur(20px)',
-                }}
+                style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', width: 340, padding: '16px 20px', background: 'rgba(10,5,30,0.92)', border: '1px solid rgba(0,255,255,0.4)', borderRadius: 12, boxShadow: '0 0 20px rgba(0,255,255,0.3)', zIndex: 30, backdropFilter: 'blur(20px)' }}
               >
                 <p className="font-poppins text-xs text-gray-300 mb-2">{activeQ}</p>
                 <p className="font-poppins text-xs text-cyan-300">
                   Feel free to reach out via the Get in Touch page for a detailed answer!
                 </p>
-                <button
-                  onClick={() => setActiveQ(null)}
-                  style={{ position: 'absolute', top: 8, right: 12, color: '#666', background: 'none', border: 'none', cursor: 'none', fontSize: 16 }}
-                >×</button>
+                <button onClick={() => setActiveQ(null)} style={{ position: 'absolute', top: 8, right: 12, color: '#666', background: 'none', border: 'none', cursor: 'none', fontSize: 16 }}>×</button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -202,19 +170,11 @@ export default function FAQSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex justify-center mt-6"
+          className="flex justify-center mt-4 sm:mt-6"
         >
           <div
-            className="flex items-center overflow-hidden"
-            style={{
-              background: 'rgba(5,5,20,0.85)',
-              border: '1px solid rgba(150,100,255,0.4)',
-              borderRadius: 50,
-              boxShadow: '0 0 20px rgba(120,80,200,0.2)',
-              backdropFilter: 'blur(10px)',
-              maxWidth: 480,
-              width: '100%',
-            }}
+            className="flex items-center overflow-hidden w-full"
+            style={{ background: 'rgba(5,5,20,0.85)', border: '1px solid rgba(150,100,255,0.4)', borderRadius: 50, boxShadow: '0 0 20px rgba(120,80,200,0.2)', backdropFilter: 'blur(10px)', maxWidth: 480 }}
           >
             <input
               type="text"
@@ -222,21 +182,15 @@ export default function FAQSection() {
               onChange={e => setQuestion(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
               placeholder="Your Question..."
-              className="flex-1 bg-transparent text-white text-sm font-poppins px-6 py-3 outline-none"
+              className="flex-1 bg-transparent text-white text-xs sm:text-sm font-poppins px-4 sm:px-6 py-3 outline-none"
               style={{ color: 'rgba(255,255,255,0.85)' }}
             />
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               onClick={handleSubmit}
-              className="font-poppins font-semibold text-sm px-6 py-3 rounded-full"
-              style={{
-                background: 'linear-gradient(135deg, #0066FF, #9900FF)',
-                color: 'white',
-                margin: 4,
-                cursor: 'none',
-                boxShadow: '0 0 15px rgba(0,100,255,0.4)',
-              }}
+              className="font-poppins font-semibold text-xs sm:text-sm px-4 sm:px-6 py-3 rounded-full"
+              style={{ background: 'linear-gradient(135deg, #0066FF, #9900FF)', color: 'white', margin: 4, cursor: 'none', boxShadow: '0 0 15px rgba(0,100,255,0.4)' }}
             >
               {submitted ? '✓ Sent!' : 'Submit'}
             </motion.button>
@@ -248,20 +202,14 @@ export default function FAQSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="flex justify-center items-center mt-8"
+          className="flex justify-center items-center mt-6 sm:mt-8"
         >
           <SocialIcons size={22} gap={6} />
         </motion.div>
 
         {/* Sparkle */}
-        <div className="flex justify-end">
-          <motion.div
-            animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.1, 0.8] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{ color: 'white', fontSize: 28, filter: 'drop-shadow(0 0 8px white)' }}
-          >
-            ✦
-          </motion.div>
+        <div className="flex justify-end mt-2">
+          <motion.div animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.1, 0.8] }} transition={{ duration: 2, repeat: Infinity }} style={{ color: 'white', fontSize: 28, filter: 'drop-shadow(0 0 8px white)' }}>✦</motion.div>
         </div>
       </div>
     </section>

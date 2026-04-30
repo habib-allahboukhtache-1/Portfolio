@@ -31,12 +31,7 @@ function CircuitCorner({ position }) {
   const style = corners[position]
 
   return (
-    <svg
-      width="80"
-      height="80"
-      style={{ position: 'absolute', ...style, zIndex: 2 }}
-      viewBox="0 0 80 80"
-    >
+    <svg width="80" height="80" style={{ position: 'absolute', ...style, zIndex: 2 }} viewBox="0 0 80 80">
       <path d="M5,5 L30,5 L30,8 L8,8 L8,30 L5,30 Z" fill="#00FFFF" opacity="0.7"/>
       <line x1="30" y1="5" x2="60" y2="5" stroke="#00FFFF" strokeWidth="1" opacity="0.3"/>
       <line x1="8" y1="30" x2="8" y2="60" stroke="#00FFFF" strokeWidth="1" opacity="0.3"/>
@@ -52,18 +47,15 @@ function ExperienceItem({ exp, index }) {
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, delay: 0.2 + index * 0.15 }}
-      className="mb-12 pb-12 border-b border-gray-800 last:border-b-0 last:mb-0"
+      className="mb-8 sm:mb-12 pb-8 sm:pb-12 border-b border-gray-800 last:border-b-0 last:mb-0"
     >
       <h3
-        className="font-poppins font-bold text-xl mb-3"
-        style={{
-          color: exp.color,
-          textShadow: `0 0 15px ${exp.color}80, 0 0 30px ${exp.color}40`,
-        }}
+        className="font-poppins font-bold text-base sm:text-xl mb-3"
+        style={{ color: exp.color, textShadow: `0 0 15px ${exp.color}80, 0 0 30px ${exp.color}40` }}
       >
         {exp.title}
       </h3>
-      <p className="font-poppins text-gray-300 text-sm leading-relaxed max-w-2xl">
+      <p className="font-poppins text-gray-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
         {exp.content}
       </p>
     </motion.div>
@@ -79,25 +71,18 @@ export default function ExperiencePage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      style={{
-        position: 'relative',
-        zIndex: 1,
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+      style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
     >
       {/* Header */}
-      <div className="flex items-center px-8 pt-6 pb-4 gap-6">
-        {/* Logo as back button */}
+      <div className="flex items-center px-4 sm:px-8 pt-6 pb-4 gap-3 sm:gap-6">
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/')}
-          style={{ cursor: 'none' }}
+          style={{ cursor: 'none', flexShrink: 0 }}
           title="Back to Home"
         >
-          <KHBLogo size={70} />
+          <KHBLogo size={50} />
         </motion.div>
 
         <motion.h1
@@ -106,7 +91,7 @@ export default function ExperiencePage() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="font-orbitron font-black"
           style={{
-            fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(1.3rem, 4.5vw, 3.5rem)',
             background: 'linear-gradient(135deg, #00FFFF 0%, #9900FF 50%, #FF007F 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -118,7 +103,7 @@ export default function ExperiencePage() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex justify-center px-8 py-6">
+      <div className="flex-1 flex justify-center px-4 sm:px-8 py-4 sm:py-6">
         <div className="w-full max-w-2xl">
           {experiences.map((exp, i) => (
             <ExperienceItem key={i} exp={exp} index={i} />
@@ -129,7 +114,7 @@ export default function ExperiencePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex gap-4 mt-6"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6"
           >
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(0,255,255,0.5)' }}
@@ -139,12 +124,7 @@ export default function ExperiencePage() {
                 setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100)
               }}
               className="font-poppins font-semibold px-8 py-3 rounded-full text-sm"
-              style={{
-                background: 'linear-gradient(135deg, #0066FF, #00FFFF)',
-                color: '#03030F',
-                cursor: 'none',
-                boxShadow: '0 0 15px rgba(0,255,255,0.4)',
-              }}
+              style={{ background: 'linear-gradient(135deg, #0066FF, #00FFFF)', color: '#03030F', cursor: 'none', boxShadow: '0 0 15px rgba(0,255,255,0.4)' }}
             >
               Explore Projects
             </motion.button>
@@ -153,11 +133,7 @@ export default function ExperiencePage() {
               whileTap={{ scale: 0.97 }}
               onClick={() => navigate('/get-in-touch')}
               className="font-poppins font-semibold px-8 py-3 rounded-full text-sm text-white transition-all"
-              style={{
-                background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.35)',
-                cursor: 'none',
-              }}
+              style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.35)', cursor: 'none' }}
             >
               Get in Touch
             </motion.button>
@@ -181,9 +157,7 @@ export default function ExperiencePage() {
           animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.1, 0.8] }}
           transition={{ duration: 2, repeat: Infinity }}
           style={{ color: 'white', fontSize: 28, filter: 'drop-shadow(0 0 8px white)' }}
-        >
-          ✦
-        </motion.div>
+        >✦</motion.div>
       </div>
     </motion.div>
   )

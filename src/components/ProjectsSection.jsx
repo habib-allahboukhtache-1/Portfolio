@@ -61,28 +61,16 @@ function ProjectCard({ project, type }) {
       }}
     >
       <div className="flex justify-between items-start mb-3">
-        <h3 className="font-poppins font-semibold text-white text-base">{project.title}</h3>
+        <h3 className="font-poppins font-semibold text-white text-sm sm:text-base">{project.title}</h3>
         <div className="flex gap-2 text-gray-400">
-          <motion.a href="#" whileHover={{ color: accentColor }} style={{ cursor: 'none' }}>
-            <GitHubIcon />
-          </motion.a>
+          <motion.a href="#" whileHover={{ color: accentColor }} style={{ cursor: 'none' }}><GitHubIcon /></motion.a>
           {project.hasPreview && (
-            <motion.a href="#" whileHover={{ color: accentColor }} style={{ cursor: 'none' }}>
-              <ExternalIcon />
-            </motion.a>
+            <motion.a href="#" whileHover={{ color: accentColor }} style={{ cursor: 'none' }}><ExternalIcon /></motion.a>
           )}
         </div>
       </div>
 
-      {/* Mini preview / placeholder */}
-      <div
-        className="rounded-lg mb-3 flex items-center justify-center"
-        style={{
-          height: 80,
-          background: `linear-gradient(135deg, rgba(5,5,20,0.9), ${accentColor}10)`,
-          border: `1px solid ${accentColor}20`,
-        }}
-      >
+      <div className="rounded-lg mb-3 flex items-center justify-center" style={{ height: 80, background: `linear-gradient(135deg, rgba(5,5,20,0.9), ${accentColor}10)`, border: `1px solid ${accentColor}20` }}>
         {project.hasPreview ? (
           <div className="w-full h-full rounded-lg overflow-hidden flex items-center justify-center">
             <span className="text-xs text-gray-500 font-poppins">Portfolio Preview</span>
@@ -102,13 +90,7 @@ function ProjectCard({ project, type }) {
         whileHover={{ boxShadow: `0 0 20px ${accentColor}60`, scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         className="font-poppins font-semibold text-xs px-4 py-2 rounded-full"
-        style={{
-          background: `${accentColor}20`,
-          border: `1px solid ${accentColor}`,
-          color: accentColor,
-          cursor: 'none',
-          textShadow: `0 0 8px ${accentColor}`,
-        }}
+        style={{ background: `${accentColor}20`, border: `1px solid ${accentColor}`, color: accentColor, cursor: 'none', textShadow: `0 0 8px ${accentColor}` }}
       >
         Explore this project.
       </motion.button>
@@ -118,8 +100,8 @@ function ProjectCard({ project, type }) {
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="relative py-20" style={{ zIndex: 1 }}>
-      <div className="container mx-auto px-8">
+    <section id="projects" className="relative py-12 sm:py-20 overflow-x-hidden" style={{ zIndex: 1 }}>
+      <div className="container mx-auto px-4 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +112,7 @@ export default function ProjectsSection() {
           <h2
             className="font-orbitron font-black mb-4"
             style={{
-              fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
               background: 'linear-gradient(135deg, #00FFFF, #9900FF, #FF007F)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -139,13 +121,14 @@ export default function ProjectsSection() {
           >
             Projects
           </h2>
-          <p className="font-poppins text-gray-300 max-w-2xl mx-auto text-sm">
+          <p className="font-poppins text-gray-300 max-w-2xl mx-auto text-xs sm:text-sm">
             These projects are curated to demonstrate my diverse skills in full-stack engineering, scalable architecture,
             and AI application, showcasing a passion for innovation and elegant problem-solving.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-8 mt-10">
+        {/* grid-cols-1 on mobile → grid-cols-2 on md+ */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-8 sm:mt-10">
           {/* Web Dev column */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -153,21 +136,11 @@ export default function ProjectsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            {/* Column header with outer glow border */}
-            <div
-              className="rounded-2xl p-5"
-              style={{
-                border: '1px solid rgba(0,255,255,0.3)',
-                boxShadow: '0 0 30px rgba(0,255,255,0.15), inset 0 0 30px rgba(0,255,255,0.03)',
-                background: 'rgba(0,5,15,0.5)',
-              }}
-            >
-              <h3 className="font-poppins font-semibold text-white text-lg mb-5">
+            <div className="rounded-2xl p-4 sm:p-5" style={{ border: '1px solid rgba(0,255,255,0.3)', boxShadow: '0 0 30px rgba(0,255,255,0.15), inset 0 0 30px rgba(0,255,255,0.03)', background: 'rgba(0,5,15,0.5)' }}>
+              <h3 className="font-poppins font-semibold text-white text-base sm:text-lg mb-5">
                 Web Development Projects.
               </h3>
-              {webProjects.map((p, i) => (
-                <ProjectCard key={i} project={p} type="web" />
-              ))}
+              {webProjects.map((p, i) => <ProjectCard key={i} project={p} type="web" />)}
             </div>
           </motion.div>
 
@@ -178,20 +151,11 @@ export default function ProjectsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <div
-              className="rounded-2xl p-5"
-              style={{
-                border: '1px solid rgba(255,0,127,0.3)',
-                boxShadow: '0 0 30px rgba(255,0,127,0.15), inset 0 0 30px rgba(255,0,127,0.03)',
-                background: 'rgba(15,0,5,0.5)',
-              }}
-            >
-              <h3 className="font-poppins font-semibold text-white text-lg mb-5">
+            <div className="rounded-2xl p-4 sm:p-5" style={{ border: '1px solid rgba(255,0,127,0.3)', boxShadow: '0 0 30px rgba(255,0,127,0.15), inset 0 0 30px rgba(255,0,127,0.03)', background: 'rgba(15,0,5,0.5)' }}>
+              <h3 className="font-poppins font-semibold text-white text-base sm:text-lg mb-5">
                 Software Systems Projects.
               </h3>
-              {sysProjects.map((p, i) => (
-                <ProjectCard key={i} project={p} type="sys" />
-              ))}
+              {sysProjects.map((p, i) => <ProjectCard key={i} project={p} type="sys" />)}
             </div>
           </motion.div>
         </div>
