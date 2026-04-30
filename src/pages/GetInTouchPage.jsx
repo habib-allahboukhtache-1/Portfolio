@@ -7,14 +7,14 @@ import SocialIcons from '../components/SocialIcons'
 
 function PulsingHeadshot() {
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 200, height: 200 }}>
+    <div className="relative flex items-center justify-center" style={{ width: 270, height: 270 }}>
       {[1, 2, 3].map((i) => (
         <motion.div
           key={i}
           style={{
             position: 'absolute',
-            width: 160 + i * 16,
-            height: 160 + i * 16,
+            width: 220 + i * 16,
+            height: 220 + i * 16,
             borderRadius: '50%',
             border: `1px solid rgba(${i === 1 ? '0,255,255' : i === 2 ? '150,0,255' : '255,0,127'}, 0.3)`,
           }}
@@ -25,7 +25,7 @@ function PulsingHeadshot() {
       <motion.div
         animate={{ boxShadow: ['0 0 20px rgba(0,255,255,0.4), 0 0 40px rgba(150,0,255,0.2)', '0 0 35px rgba(0,255,255,0.7), 0 0 70px rgba(150,0,255,0.4)', '0 0 20px rgba(0,255,255,0.4), 0 0 40px rgba(150,0,255,0.2)'] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(30,10,50,0.9) 0%, rgba(10,5,25,0.95) 70%)', border: '2px solid transparent', backgroundClip: 'padding-box', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 5 }}
+        style={{ width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(30,10,50,0.9) 0%, rgba(10,5,25,0.95) 70%)', border: '2px solid transparent', backgroundClip: 'padding-box', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 5 }}
       >
         <div style={{ position: 'absolute', inset: -2, borderRadius: '50%', background: 'linear-gradient(135deg, #00FFFF, #9900FF, #FF007F)', zIndex: -1 }} />
         <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(30,10,50,0.95), rgba(10,5,25,0.98))', zIndex: 0 }} />
@@ -77,30 +77,53 @@ export default function GetInTouchPage() {
       style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
     >
       {/* Header */}
-      <div className="flex items-center justify-center px-4 sm:px-8 pt-6 pb-2 gap-3 sm:gap-4 flex-wrap">
-        <motion.div whileHover={{ scale: 1.05 }} onClick={() => navigate('/')} style={{ cursor: 'none', flexShrink: 0 }}>
+      <div className="relative flex items-center px-4 sm:px-8 pt-6 pb-2">
+        {/* Logo — anchored to the left edge */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          onClick={() => navigate('/')}
+          style={{ cursor: 'none', flexShrink: 0 }}
+          className="md:absolute md:left-8 md:top-1/2 md:-translate-y-1/2"
+        >
           <KHBLogo size={55} />
         </motion.div>
 
+        {/* Title — centered across the full header width on desktop */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="flex items-baseline gap-2 sm:gap-3 flex-wrap"
+          className="flex-1 flex flex-wrap items-baseline justify-center gap-2 sm:gap-3 md:text-center"
         >
-          <span className="font-orbitron font-black" style={{ fontSize: 'clamp(1.1rem, 3.5vw, 2.5rem)', background: 'linear-gradient(90deg, #9900FF, #FF007F)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 10px rgba(150,0,255,0.6))' }}>
+          <span
+            className="font-orbitron font-black"
+            style={{
+              fontSize: 'clamp(1.1rem, 3.5vw, 2.8rem)',
+              background: 'linear-gradient(90deg, #9900FF, #FF007F)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              filter: 'drop-shadow(0 0 12px rgba(150,0,255,0.7))',
+            }}
+          >
             I'm Habib
           </span>
-          <span className="font-orbitron font-black" style={{ fontSize: 'clamp(1.1rem, 3.5vw, 2.5rem)', color: '#00FFFF', textShadow: '0 0 15px #00FFFF, 0 0 30px rgba(0,255,255,0.5)' }}>
+          <span
+            className="font-orbitron font-black"
+            style={{
+              fontSize: 'clamp(1.1rem, 3.5vw, 2.8rem)',
+              color: '#00FFFF',
+              textShadow: '0 0 18px #00FFFF, 0 0 36px rgba(0,255,255,0.6), 0 0 60px rgba(0,255,255,0.3)',
+            }}
+          >
             let's get in touch!
           </span>
         </motion.div>
       </div>
 
       {/* Main content — stacks on mobile, side-by-side on md+ */}
-      <div className="flex-1 flex flex-col md:flex-row items-center md:items-start px-4 sm:px-8 py-4 gap-6 md:gap-10">
+      <div className="flex-1 flex flex-col md:flex-row items-center md:items-start px-4 sm:px-8 py-4 gap-6">
 
-        {/* Headshot — centered on mobile, left on md */}
+        {/* Headshot — centered on mobile, left with right margin on md */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -110,14 +133,14 @@ export default function GetInTouchPage() {
           <PulsingHeadshot />
         </motion.div>
 
-        {/* Right: form */}
+        {/* Right: form — centered on desktop within the remaining flex space */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex-1 w-full max-w-xl mx-auto md:mx-0"
+          className="w-full max-w-xl md:ml-0 md:mr-auto"
         >
-          <p className="font-poppins text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 text-center md:text-left">
+          <p className="font-poppins text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 text-center">
             I'm always excited to explore new full-stack engineering, AI development, and creative problem-solving opportunities.
             Whether you have a complex challenge, an innovative idea, or simply want to connect to discuss the future of tech, I'd love to hear from you.
           </p>
