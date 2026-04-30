@@ -138,7 +138,7 @@ export default function GetInTouchPage() {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="w-full max-w-xl md:ml-0 md:mr-auto"
+          className="w-full max-w-xl md:ml-6 md:mr-auto"
         >
           <p className="font-poppins text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 text-center">
             I'm always excited to explore new full-stack engineering, AI development, and creative problem-solving opportunities.
