@@ -77,7 +77,7 @@ export default function GetInTouchPage() {
       style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
     >
       {/* Header */}
-      <div className="flex items-center px-4 sm:px-8 pt-6 pb-2 gap-3 sm:gap-4 flex-wrap">
+      <div className="flex items-center justify-center px-4 sm:px-8 pt-6 pb-2 gap-3 sm:gap-4 flex-wrap">
         <motion.div whileHover={{ scale: 1.05 }} onClick={() => navigate('/')} style={{ cursor: 'none', flexShrink: 0 }}>
           <KHBLogo size={55} />
         </motion.div>
@@ -115,9 +115,9 @@ export default function GetInTouchPage() {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex-1 w-full max-w-xl"
+          className="flex-1 w-full max-w-xl mx-auto md:mx-0"
         >
-          <p className="font-poppins text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
+          <p className="font-poppins text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 text-center md:text-left">
             I'm always excited to explore new full-stack engineering, AI development, and creative problem-solving opportunities.
             Whether you have a complex challenge, an innovative idea, or simply want to connect to discuss the future of tech, I'd love to hear from you.
           </p>
@@ -154,7 +154,7 @@ export default function GetInTouchPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.9 }}
-        className="flex flex-col items-center gap-4 py-6"
+        className="flex flex-col items-center gap-6 py-6"
       >
         <SocialIcons size={22} gap={8} showLabels />
         <p className="font-poppins text-xs text-gray-500">

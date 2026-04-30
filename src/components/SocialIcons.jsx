@@ -68,7 +68,7 @@ const ICON_DEFS = [
  */
 export default function SocialIcons({ size = 20, gap = 6, showLabels = false }) {
   return (
-    <div className={`flex items-center gap-${gap}`}>
+    <div className="flex items-center" style={{ gap: `${gap * 0.25}rem` }}>
       {ICON_DEFS.map(({ label, href, svg, external }) => (
         <motion.a
           key={label}
